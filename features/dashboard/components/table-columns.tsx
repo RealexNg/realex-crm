@@ -45,7 +45,7 @@ export const allFactoryDistributors: ColumnDef<AllUserProfileResponse>[] = [
     // accessorFn: (row) => formatDate(row.updated_at, "dd-MM-yyyy"),
     header: "Resend SMS",
     cell: ({ row }) => (
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-4">
         <Button size={"sm"}>Resend SMS</Button>
         <Button size={"sm"} variant={"outline"}>
           {row.original?.phone}
