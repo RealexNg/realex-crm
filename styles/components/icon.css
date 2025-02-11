@@ -1,0 +1,15 @@
+@layer components {
+
+    /* ========icons========== */
+    .icon-lg {
+        @apply size-5;
+    }
+
+    .icon-md {
+        @apply size-5;
+    }
+
+    .icon-sm {
+        @apply size-4;
+    }
+}

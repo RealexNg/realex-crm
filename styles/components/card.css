@@ -1,0 +1,11 @@
+@layer components {
+    /* =====card====== */
+
+    .card {
+        /* @apply bg-background-default border-border-default rounded-lg border p-3 */
+    }
+
+    .card-interactive {
+        /* @apply border-control-background-hover */
+    }
+}

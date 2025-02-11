@@ -1,0 +1,62 @@
+@layer components {
+  .button {
+    @apply relative inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-md text-center align-top text-[14px] transition active:brightness-[0.92] active:saturate-[1.1] disabled:cursor-not-allowed;
+  }
+
+  .button-primary {
+    @apply border border-transparent bg-[--accent-9] font-medium text-[--accent-contrast] shadow-lg shadow-[--accent-a3] hover:bg-[--accent-10] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--accent-a8] active:shadow-none disabled:bg-[--gray-a3] disabled:text-[--gray-a8] disabled:outline-none disabled:filter-none;
+  }
+
+  .button-outline {
+    @apply border border-[--gray-a8] font-medium text-[--gray-a11] hover:bg-[--gray-a2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--gray-a8] active:bg-[--gray-a3] disabled:border-[--gray-a8] disabled:bg-[--gray-a3] disabled:text-[--gray-a8] disabled:outline-none disabled:filter-none;
+  }
+
+  .button-secondary {
+    @apply border border-transparent bg-[--gray-a3] font-medium text-[--gray-a11] hover:bg-[--gray-a4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--gray-a8] disabled:bg-[--gray-a3] disabled:text-[--gray-a8] disabled:outline-none disabled:filter-none;
+  }
+
+  .button-ghost {
+    @apply border border-transparent bg-transparent font-medium text-[--gray-a11] hover:bg-[--gray-a3] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--gray-a8] active:bg-[--gray-a4] disabled:bg-[--gray-a3] disabled:text-[--gray-a8] disabled:outline-none disabled:filter-none;
+  }
+
+  .button-link {
+    @apply underline decoration-[--gray-a6];
+  }
+
+  /* Uncomment if needed */
+  /* .button-danger {
+    @apply bg-button-danger-background-rest hover:bg-button-danger-background-hover disabled:bg-button-danger-background-disabled active:bg-button-danger-background-active text-button-danger-foreground-rest hover:text-button-danger-foreground-hover disabled:text-button-danger-foreground-disabled border-button-danger-border-rest hover:border-button-danger-border-hover active:border-button-danger-border-active [&>svg]:text-button-danger-icon-rest [&>svg]:hover:text-button-danger-icon-hover border;
+  } */
+
+  /* .button-lg {
+    @apply gap-2 px-3.5 text-body-large [&:not(.button-ghost)]:h-10 [&:not(.button-ghost)]:py-2 [&:where(.button-ghost)]:!p-3;
+  }
+
+  .button-md {
+    @apply gap-1 px-2.5 text-body-large [&:not(.button-ghost)]:h-8 [&:not(.button-ghost)]:py-1.5 [&:where(.button-ghost)]:!p-1;
+  }
+
+  .button-sm {
+    @apply gap-1 px-2 text-body-medium [&:not(.button-ghost)]:h-7 [&:not(.button-ghost)]:py-1 [&:where(.button-ghost)]:!p-1;
+  }
+
+  .button-xs {
+    @apply gap-1 px-2 text-body-small [&:not(.button-ghost)]:h-6 [&:not(.button-ghost)]:py-1 [&:where(.button-ghost)]:!p-1;
+  } */
+
+  .button-lg {
+    @apply h-10 gap-2 px-3.5 py-2 text-body-large;
+  }
+
+  .button-md {
+    @apply h-8 gap-1 px-2.5 py-1.5 text-body-large;
+  }
+
+  .button-sm {
+    @apply h-7 gap-1 px-2 py-1 text-body-medium;
+  }
+
+  .button-xs {
+    @apply h-6 gap-1 px-2 py-1 text-body-small;
+  }
+}

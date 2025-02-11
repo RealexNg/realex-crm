@@ -1,0 +1,63 @@
+/* ===========typography======= */
+
+:root {
+  --text-display-lineBoxHeight: 1.4;
+  /* --text-display-size: 2.5rem; */
+  --text-display-size: clamp(2rem, 2vw + 1rem, 2.5rem);
+  --text-display-lineHeight: 1.4;
+  /* --text-display-weight: 500; */
+
+  /* --text-title-size-large: 2rem; */
+  --text-title-size-large: clamp(1.75rem, 1vw + 1rem, 2rem);
+  --text-title-lineHeight-large: 2rem;
+  /* --text-title-weight-large: 500; */
+
+  /* --text-title-size-medium: 1.25rem; */
+  --text-title-size-medium: clamp(1rem, 1vw + 0.5rem, 1.25rem);
+  --text-title-lineHeight-medium: 1.625rem;
+  /* --text-title-weight-medium: 500; */
+
+  /* --text-title-size-small: 1rem; */
+  --text-title-size-small: clamp(0.875rem, 0.75vw + 0.25rem, 1rem);
+  --text-title-lineHeight-small: 1.5rem;
+  /* --text-title-weight-small: 500; */
+
+  /* --text-subtitle-size: 1.25rem; */
+  --text-subtitle-size: clamp(1rem, 1vw + 0.25rem, 1.25rem);
+  --text-subtitle-lineHeight: 1.625rem;
+  /* --text-subtitle-weight: 400; */
+
+  /* --text-body-size-large: 1rem; */
+  --text-body-size-large: clamp(0.875rem, 0.5vw + 0.25rem, 1rem);
+  --text-body-lineHeight-large: 1.5rem;
+
+  /* --text-body-size-medium: 0.875rem; */
+  --text-body-size-medium: clamp(0.8125rem, 0.5vw + 0.1875rem, 0.875rem);
+  --text-body-lineHeight-medium: 1.125rem;
+
+  /* --text-body-size-small: 0.75rem; */
+  --text-body-size-small: clamp(0.75rem, 0.5vw + 0.125rem, 0.75rem);
+  --text-body-lineHeight-small: 1rem;
+
+  /* --text-caption-size: 0.75rem; */
+  --text-caption-size: clamp(0.6875rem, 0.5vw + 0.0625rem, 0.75rem);
+  --text-caption-lineHeight: 1.3333;
+  /* --text-caption-weight: 400; */
+
+  /* --text-codeBlock-size: 0.8125rem; */
+  --text-codeBlock-size: clamp(0.75rem, 0.5vw + 0.0625rem, 0.8125rem);
+  --text-codeBlock-lineHeight: 1.5385;
+  /* --text-codeBlock-weight: 400; */
+
+  /* --text-codeInline-size: 0.9285em; */
+  --text-codeInline-size: clamp(0.875em, 0.5vw + 0.0535em, 0.9285em);
+  /* --text-codeInline-weight: 400; */
+}
+
+/* @font-face {
+  src: url('../lib/Inter-VariableFont_opsz\,wght.ttf');
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 200 300 400 500 600 700 800 900;
+  font-display: swap;
+} */

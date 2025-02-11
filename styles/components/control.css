@@ -1,0 +1,36 @@
+  /* =====control====== */
+  .control {
+      @apply [&.is-focus]:border-[--accent-8] text-[--gray-12] placeholder:text-[--gray-11] border-[--gray-a7] inline-flex w-full items-center gap-1 whitespace-nowrap rounded-md border ring-inset transition duration-200 [&.is-focus]:outline-none [&.is-focus]:ring-[1px] [&_input::placeholder]:opacity-60;
+
+      /* & svg, */
+      /* & .prefix,
+      & .suffix,
+      & .number-step {
+          @apply text-control-foreground-rest;
+      } */
+  }
+
+  .control-lg {
+      @apply h-10 gap-1.5 px-4 text-base leading-9;
+  }
+
+  .control-md {
+      @apply h-8 gap-1 px-3 text-base leading-7;
+  }
+
+  .control-sm {
+      @apply h-6 gap-0.5 px-2 text-sm leading-6;
+  }
+
+  /*.control-field-disabled {*/
+  /*    @apply bg-control-background-disabled border-control-border-disabled text-control-foreground-disabled cursor-not-allowed [&>*]:cursor-not-allowed;*/
+  /*}*/
+
+  /*.control-field-error {*/
+  /*    @apply border-control-border-danger bg-control-danger-background-hover hover:bg-control-danger-background-hover active:bg-control-danger-background-active [&.is-focus]:border-control-border-danger;*/
+  /*}*/
+
+  /* =====control-checkbox====== */
+  /*.control-checked {*/
+  /*    @apply border-control-checked-border-rest bg-control-checked-background-rest hover:border-control-checked-border-hover hover:bg-control-checked-background-hover active:bg-control-checked-background-active active:border-control-checked-border-active disabled:bg-control-checked-background-disabled disabled:text-control-checked-foreground-disabled disabled:border-control-checked-border-disabled border;*/
+  /*}*/

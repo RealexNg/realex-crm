@@ -1,0 +1,11 @@
+@layer components {
+  /* =====popover====== */
+  .popover {
+    @apply border-border-default rounded-lg border bg-[--gray-2] p-2;
+  }
+
+  /* Uncomment if needed
+  .popover-item {
+    @apply button-md control-transparent;
+  } */
+}

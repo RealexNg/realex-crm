@@ -1,0 +1,190 @@
+@import url("./base.css");
+
+:root,
+.light,
+.light-theme {
+  /* button  */
+  /* --button-primary-fgColor-rest: #ffffff;
+  --button-primary-fgColor-disabled: var(--gray-a8);
+  --button-primary-iconColor-rest: #ffffffcc;
+  --button-primary-bgColor-rest: var(--purple-9);
+  --button-primary-bgColor-hover: var(--purple-10);
+  --button-primary-bgColor-active: var(--purple-a10);
+  --button-primary-bgColor-disabled: var(--gray-a3);
+  --button-primary-borderColor-rest: var(--purple-a9);
+  --button-primary-borderColor-hover: var(--purple-a10);
+  --button-primary-borderColor-active: var(--purple-a10);
+  --button-primary-borderColor-disabled: var(--gray-a3);
+  --button-primary-shadow-selected: inset 0px 1px 0px 0px var(--purple-a3);
+  --button-ghost-fgColor-rest: var(--gray-a11);
+  --button-ghost-fgColor-hover: var(--gray-a11);
+  --button-ghost-fgColor-disabled: var(--gray-a8);
+  --button-ghost-iconColor-rest: var(--gray-a11);
+  --button-ghost-iconColor-hover: var(--gray-a11);
+  --button-ghost-iconColor-disabled: var(--gray-a8);
+  --button-ghost-bgColor-rest: #ffffff00;
+  --button-ghost-bgColor-hover: var(--gray-a3);
+  --button-ghost-bgColor-active: var(--gray-a5);
+  --button-ghost-bgColor-disabled: var(--gray-a3);
+  --button-ghost-borderColor-rest: #ffffff00;
+  --button-ghost-borderColor-hover: #ffffff00;
+  --button-ghost-borderColor-disabled: var(--gray-a3);
+  --button-secondary-fgColor-rest: var(--gray-a11);
+  --button-secondary-fgColor-hover: var(--gray-a11);
+  --button-secondary-fgColor-active: var(--gray-a11);
+  --button-secondary-fgColor-disabled: var(--gray-a8);
+  --button-secondary-bgColor-rest: var(--gray-a3);
+  --button-secondary-bgColor-hover: var(--gray-a4);
+  --button-secondary-bgColor-active: var(--gray-a5);
+  --button-secondary-bgColor-disabled: var(--gray-a3);
+  --button-secondary-borderColor-rest: var(--gray-a3);
+  --button-secondary-borderColor-hover: var(--gray-a4);
+  --button-secondary-borderColor-active: var(--gray-a5);
+  --button-secondary-shadow-selected: inset 0px 1px 0px 0px #00215533;
+  --button-danger-fgColor-rest: #d1242f;
+  --button-danger-fgColor-hover: #ffffff;
+  --button-danger-fgColor-active: #ffffff;
+  --button-danger-fgColor-disabled: #d1242f80;
+  --button-danger-iconColor-rest: #d1242f;
+  --button-danger-iconColor-hover: #ffffff;
+  --button-danger-bgColor-rest: #ffffff00;
+  --button-danger-bgColor-hover: #a40e26;
+  --button-danger-bgColor-active: #8b0820;
+  --button-danger-bgColor-disabled: var(--gray-a3);
+  --button-danger-borderColor-rest: var(--purple-a5);
+  --button-danger-borderColor-hover: var(--purple-a12);
+  --button-danger-borderColor-active: var(--purple-a12);
+  --button-danger-shadow-selected: inset 0px 1px 0px 0px #4c001433;
+  --button-inactive-fgColor: #57606a;
+  --button-inactive-bgColor: #eaeef2; */
+
+  /* fgColor  */
+  /* --fgColor-default: var(--gray-12);
+  --fgColor-muted: var(--gray-a11);
+  --fgColor-onEmphasis: #ffffff;
+  --fgColor-white: #ffffff;
+  --fgColor-black: var(--gray-12);
+  --fgColor-disabled: var(--gray-a8);
+  --fgColor-link: var(--purple-9);
+  --fgColor-neutral: var(--gray-12);
+  --fgColor-accent: var(--purple-9);
+  --fgColor-success: #1a7f37;
+  --fgColor-attention: #9a6700;
+  --fgColor-severe: #bc4c00;
+  --fgColor-danger: #d1242f; */
+
+  /* bgColor  */
+  /* --bgColor-default: #ffffff;
+  --bgColor-muted: var(--gray-a1);
+  --bgColor-inset: var(--gray-a2);
+  --bgColor-emphasis: var(--gray-a12);
+  --bgColor-inverse: var(--gray-a12);
+  --bgColor-white: #ffffff;
+  --bgColor-black: var(--gray-12);
+  --bgColor-disabled: var(--gray-a3);
+  --bgColor-transparent: #ffffff00;
+  --bgColor-neutral-muted: #afb8c133;
+  --bgColor-neutral-emphasis: var(--gray-12);
+  --bgColor-accent-muted: var(--purple-a4);
+  --bgColor-accent-emphasis: var(--purple-9);
+  --bgColor-success-muted: #dafbe1;
+  --bgColor-success-emphasis: #1f883d;
+  --bgColor-attention-muted: #fff8c5;
+  --bgColor-attention-emphasis: #9a6700;
+  --bgColor-severe-muted: #fff1e5;
+  --bgColor-severe-emphasis: #bc4c00;
+  --bgColor-danger-muted: #ffebe9;
+  --bgColor-danger-emphasis: #cf222e; */
+
+  /* border  */
+  /* --borderColor-default: var(--gray-a7);
+  --borderColor-muted: var(--gray-a4);
+  --borderColor-emphasis: var(--gray-12);
+  --borderColor-disabled: var(--gray-a3);
+  --borderColor-transparent: #ffffff00;
+  --borderColor-neutral-muted: #afb8c133;
+  --borderColor-neutral-emphasis: var(--gray-12);
+  --borderColor-accent-muted: var(--purple-a4);
+  --borderColor-accent-emphasis: var(--purple-9);
+  --borderColor-success-muted: #4ac26b66;
+  --borderColor-success-emphasis: #1a7f37;
+  --borderColor-attention-muted: #d4a72c66;
+  --borderColor-attention-emphasis: #bf8700;
+  --borderColor-severe-muted: #fb8f4466;
+  --borderColor-severe-emphasis: #bc4c00;
+  --borderColor-danger-muted: #ff818266;
+  --borderColor-danger-emphasis: #cf222e; */
+
+  /* control */
+  /* --control-bgColor-rest: #ffffff00;
+  --control-bgColor-hover: var(--gray-a3);
+  --control-bgColor-active: var(--gay-a2);
+  --control-bgColor-disabled: var(--gray-a3);
+  --control-bgColor-selected: var(--purple-a3);
+  --control-fgColor-rest: var(--gray-a12);
+  --control-fgColor-placeholder: var(--gray-a10);
+  --control-fgColor-disabled: var(--gray-a8);
+  --control-fgColor-selected: var(--gray-a12);
+  --control-borderColor-rest: var(--gray-a7);
+  --control-borderColor-emphasis: #868f99;
+  --control-borderColor-disabled: var(--gray-a3);
+  --control-borderColor-selected: #ffffff00;
+  --control-borderColor-success: #1a7f37;
+  --control-borderColor-danger: #cf222e;
+  --control-borderColor-warning: #bf8700;
+  --control-danger-fgColor-rest: #d1242f;
+  --control-danger-fgColor-hover: #d1242f;
+  --control-danger-bgColor-hover: #ffebe9;
+  --control-danger-bgColor-active: #ffebe966;
+  --control-checked-bgColor-rest: var(--purple-9);
+  --control-checked-bgColor-hover: #0860ca;
+  --control-checked-bgColor-active: var(--purple-a3);
+  --control-checked-bgColor-disabled: var(--gray-a8);
+  --control-checked-fgColor-rest: #ffffff;
+  --control-checked-fgColor-disabled: #ffffff;
+  --control-checked-borderColor-rest: var(--purple-9);
+  --control-checked-borderColor-hover: #0860ca;
+  --control-checked-borderColor-active: var(--purple-a3);
+  --control-checked-borderColor-disabled: var(--gray-a8); */
+
+
+  /* textfield */
+  /* --textfield-bgColor-rest: var(--gray-surface);
+  --textfield-bgColor-hover: var(--gray-surface);
+  --textfield-bgColor-active: var(--gay-a2);
+  --textfield-bgColor-disabled: var(--gray-a3);
+  --textfield-bgColor-selected: var(--gray-a5);
+  --textfield-fgColor-rest: var(--gray-12);
+  --textfield-fgColor-placeholder: var(--gray-a11);
+  --textfield-fgColor-disabled: var(--gray-a8);
+  --textfield-fgColor-selected: var(--gray-a12);
+  --textfield-borderColor-rest: var(--gray-a7);
+  --textfield-borderColor-emphasis: #868f99;
+  --textfield-borderColor-disabled: var(--gray-a6);
+  --textfield-borderColor-selected: var(--gray-8);
+  --textfield-borderColor-success: #1a7f37;
+  --textfield-borderColor-danger: #cf222e;
+  --textfield-borderColor-warning: #bf8700; */
+
+  /* data  */
+  /* --data-blue-color: #006edb;
+  --data-blue-color-muted: #d1f0ff;
+  --data-auburn-color: #9d615c;
+  --data-auburn-color-muted: #f2e9e9;
+  --data-orange-color: #eb670f;
+  --data-orange-color-muted: #ffe7d1;
+  --data-yellow-color: #b88700;
+  --data-yellow-color-muted: #ffec9e;
+  --data-green-color: #30a147;
+  --data-green-color-muted: #caf7ca;
+  --data-teal-color: #179b9b;
+  --data-teal-color-muted: #c7f5ef;
+  --data-purple-color: #894ceb;
+  --data-purple-color-muted: #f1e5ff;
+  --data-pink-color: #ce2c85;
+  --data-pink-color-muted: #ffe5f1;
+  --data-red-color: #df0c24;
+  --data-red-color-muted: #ffe2e0;
+  --data-gray-color: #808fa3;
+  --data-gray-color-muted: #e8ecf2; */
+}

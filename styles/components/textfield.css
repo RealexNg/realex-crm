@@ -1,0 +1,60 @@
+@layer components {
+  /* =====textfield====== */
+
+  .textfield {
+    @apply flex items-stretch whitespace-nowrap rounded-md border border-[--gray-a7] bg-[--color-surface] p-px text-start text-[--gray-12] selection:bg-[--accent-a5] [&.is-focus]:border-[--accent-8];
+
+    /*
+        bg-textfield-background-rest hover:bg-textfield-background-hover focus:bg-textfield-background-active disabled:bg-textfield-background-disabled text-textfield-foreground-rest placeholder:text-textfield-foreground-placeholder disabled:text-textfield-foreground-disabled border-textfield-border-rest focus:border-textfield-border-emphasis disabled:border-textfield-border-disabled rounded-md border transition duration-200 w-full outline-none disabled:cursor-not-allowed inline-flex items-center gap-1 whitespace-nowrap
+        */
+  }
+
+  .textfield svg {
+    @apply text-[--gray-a11];
+  }
+
+  .textfield > input {
+    @apply flex w-full items-center bg-transparent pb-[0.5px] indent-2;
+  }
+
+  .textfield:has(.prefix) > input {
+    @apply indent-0;
+  }
+
+  .textfield .prefix,
+  .textfield .suffix {
+    @apply grid place-content-center px-2;
+  }
+
+  /* .textfield[data-disabled] {
+    @apply border-textfield-border-disabled text-textfield-foreground-disabled;
+  } */
+
+  /* .textfield.is-focus {
+    @apply ring-textfield-border-selected ring-1 ring-inset;
+  } */
+
+  .textfield-success {
+    @apply border-textfield-border-success;
+  }
+
+  .textfield-danger {
+    @apply border-textfield-border-danger;
+  }
+
+  .textfield-warning {
+    @apply border-textfield-border-warning;
+  }
+
+  .textfield-lg {
+    @apply h-10 text-body-medium leading-9;
+  }
+
+  .textfield-md {
+    @apply h-8 text-body-medium leading-7;
+  }
+
+  .textfield-sm {
+    @apply h-6 text-body-small leading-6;
+  }
+}
