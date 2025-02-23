@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { ErrorList } from "@/components/ui/error-list";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,10 +13,14 @@ import { toast } from "sonner";
 import { useUpdateUserAccount } from "../api-services/update-user-api";
 import { useAUsers } from "../api-services/get-a-user";
 import Image from "next/image";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+import { ArrowLeftIcon } from "lucide-react";
 
 function EditUserAccount({ id }: { id: string }) {
   const [Loading, setLoading] = React.useState(false);
-  const { data, isLoading } = useAUsers(id);
+  const { data, isLoading, isFetching } = useAUsers(id);
 
   const { mutateAsync } = useUpdateUserAccount();
   const queryClient = useQueryClient();
@@ -102,7 +106,7 @@ function EditUserAccount({ id }: { id: string }) {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <div className="flex items-center justify-center w-full h-screen">
         Loading...
@@ -110,96 +114,106 @@ function EditUserAccount({ id }: { id: string }) {
     );
   }
   return (
-    <div className="w-full h-screen flex flex-col items-center justify-center">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="border border-gray-200 p-4 rounded-lg"
-      >
-        <div className="grid grid-cols-2 gap-4 my-4 ">
-          <div className="space-y-1">
-            <Label>Name</Label>
-            <Input {...register("full_name")} />
-            {errors?.full_name && (
-              <ErrorList errors={[errors?.full_name?.message || ""]} />
-            )}
-          </div>
-          <div className="space-y-1">
-            <Label>Contact person&apos;s name</Label>
-            <Input {...register("contact_name")} />
-            {errors?.contact_name && (
-              <ErrorList errors={[errors?.contact_name?.message || ""]} />
-            )}
-          </div>
-          <div className="space-y-1">
-            <Label>Phone</Label>
-            <Input type="phone" {...register("phone")} />
-            {errors?.phone && (
-              <ErrorList errors={[errors?.phone?.message || ""]} />
-            )}
-          </div>
-          <div className="space-y-1">
-            <Label>Phone (for SMS only) </Label>
-            <Input type="phone" {...register("sms_phone")} />
-            {errors?.sms_phone && (
-              <ErrorList errors={[errors?.sms_phone?.message || ""]} />
-            )}
-          </div>
-          <div className="space-y-1">
-            <Label>Email</Label>
-            <Input type="email" {...register("email")} />
-            {errors?.email && (
-              <ErrorList errors={[errors?.email?.message || ""]} />
-            )}
-          </div>
-          <div className="space-y-1">
-            <Label>Region</Label>
-            <Input type="text" {...register("region")} />
-            {errors?.region && (
-              <ErrorList errors={[errors?.region?.message || ""]} />
-            )}
-          </div>
-          <div className="space-y-1">
-            <Label>Address</Label>
-            <Input type="address" {...register("address")} />
-            {errors?.address && (
-              <ErrorList errors={[errors?.address?.message || ""]} />
-            )}
-          </div>
-          <div className="space-y-1">
-            <Label>National Id *</Label>
-            <Input type="text" {...register("id_document")} />
-            {errors?.id_document && (
-              <ErrorList errors={[errors?.id_document?.message || ""]} />
-            )}
-          </div>
-          <div className="space-y-1">
-            <Label>Image</Label>
-            {data?.profile_picture && (
-              <Image
-                src={data?.profile_picture}
-                alt="profile picture"
-                className="w-20 h-20 rounded-full"
-                width={80}
-                height={80}
-              />
-            )}
+    <div className="space-y-4 ">
+      <div className="">
+        <Link
+          className={cn(buttonVariants({ size: "sm", variant: "outline" }))}
+          href="/crm"
+        >
+          <ArrowLeftIcon size={20} />
+        </Link>
+      </div>
+      <div className="w-full h-screen flex flex-col items-center justify-center ">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="border border-gray-200 p-4 rounded-lg w-full h-full"
+        >
+          <div className="grid grid-cols-2 gap-4 my-4 ">
+            <div className="space-y-1">
+              <Label>Name</Label>
+              <Input {...register("full_name")} />
+              {errors?.full_name && (
+                <ErrorList errors={[errors?.full_name?.message || ""]} />
+              )}
+            </div>
+            <div className="space-y-1">
+              <Label>Contact person&apos;s name</Label>
+              <Input {...register("contact_name")} />
+              {errors?.contact_name && (
+                <ErrorList errors={[errors?.contact_name?.message || ""]} />
+              )}
+            </div>
+            <div className="space-y-1">
+              <Label>Phone</Label>
+              <Input type="phone" {...register("phone")} />
+              {errors?.phone && (
+                <ErrorList errors={[errors?.phone?.message || ""]} />
+              )}
+            </div>
+            <div className="space-y-1">
+              <Label>Phone (for SMS only) </Label>
+              <Input type="phone" {...register("sms_phone")} />
+              {errors?.sms_phone && (
+                <ErrorList errors={[errors?.sms_phone?.message || ""]} />
+              )}
+            </div>
+            <div className="space-y-1">
+              <Label>Email</Label>
+              <Input type="email" {...register("email")} />
+              {errors?.email && (
+                <ErrorList errors={[errors?.email?.message || ""]} />
+              )}
+            </div>
+            <div className="space-y-1">
+              <Label>Region</Label>
+              <Input type="text" {...register("region")} />
+              {errors?.region && (
+                <ErrorList errors={[errors?.region?.message || ""]} />
+              )}
+            </div>
+            <div className="space-y-1">
+              <Label>Address</Label>
+              <Input type="address" {...register("address")} />
+              {errors?.address && (
+                <ErrorList errors={[errors?.address?.message || ""]} />
+              )}
+            </div>
+            <div className="space-y-1">
+              <Label>National Id *</Label>
+              <Input type="text" {...register("id_document")} />
+              {errors?.id_document && (
+                <ErrorList errors={[errors?.id_document?.message || ""]} />
+              )}
+            </div>
+            <div className="space-y-1">
+              <Label>Image</Label>
+              {data?.profile_picture && (
+                <Image
+                  src={data?.profile_picture}
+                  alt="profile picture"
+                  className="w-20 h-20 rounded-full"
+                  width={80}
+                  height={80}
+                />
+              )}
 
-            <Input
-              type="file"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) {
-                  setValue("profile_picture", file);
-                }
-              }}
-            />
-            {errors?.profile_picture && (
-              <ErrorList errors={[errors?.profile_picture?.message || ""]} />
-            )}
+              <Input
+                type="file"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    setValue("profile_picture", file);
+                  }
+                }}
+              />
+              {errors?.profile_picture && (
+                <ErrorList errors={[errors?.profile_picture?.message || ""]} />
+              )}
+            </div>
           </div>
-        </div>
-        <Button isLoading={Loading}>Create Account</Button>
-      </form>
+          <Button isLoading={Loading}>Update Account</Button>
+        </form>
+      </div>
     </div>
   );
 }

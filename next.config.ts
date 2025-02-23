@@ -38,7 +38,12 @@ const nextConfig = {
   //   return config;
   // },
   images: {
-    domains: ["res.cloudinary.com", "images.pexels.com", "www.mystore.com"],
+    domains: [
+      "res.cloudinary.com",
+      "images.pexels.com",
+      "www.mystore.com",
+      "cloudinary.com",
+    ],
     // remotePatterns: [
     //   {
     //     protocol: "https",
