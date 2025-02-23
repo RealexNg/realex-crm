@@ -22,7 +22,7 @@ export const updateUserAccount = async (
   userProfile: UserProfile
 ): Promise<UserProfileResponse> => {
   return request({
-    url: `users/agent/user/${id}`, // Append id to the URL
+    url: `users/agent/user/${id}`,
     method: "PATCH",
     data: userProfile,
   });

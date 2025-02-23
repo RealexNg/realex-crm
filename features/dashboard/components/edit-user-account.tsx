@@ -29,7 +29,7 @@ function EditUserAccount({ id }: { id: string }) {
     register,
     handleSubmit,
     setValue,
-    reset,
+    // reset,
     formState: { errors },
   } = useForm<UserProfile>({
     resolver: zodResolver(userProfileSchema),
@@ -66,7 +66,7 @@ function EditUserAccount({ id }: { id: string }) {
       if (data.profile_picture instanceof File) {
         setLoading(true);
         const url = await uploadImage(data.profile_picture);
-        const response = await mutateAsync({
+        await mutateAsync({
           id: id,
           userProfile: {
             full_name: data.full_name,
@@ -80,15 +80,13 @@ function EditUserAccount({ id }: { id: string }) {
             profile_picture: url.url,
           },
         });
-        console.log(response, "response");
-        if (response.id) {
-          setLoading(false);
-          reset();
-          toast.success("Account created successfully");
-          queryClient.invalidateQueries({
-            queryKey: ["GET_A_USERS"],
-          });
-        }
+
+        setLoading(false);
+        //   reset();
+        toast.success("Account created successfully");
+        queryClient.invalidateQueries({
+          queryKey: ["GET_A_USERS"],
+        });
       } else {
         toast.error("Profile picture is not a valid file");
         setLoading(false);
