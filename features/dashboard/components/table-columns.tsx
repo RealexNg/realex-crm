@@ -2,8 +2,6 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-// import { Eye } from "iconsax-react";
-
 import { AllUserProfileResponse } from "@/entities/create-account";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
@@ -17,9 +15,10 @@ export const allFactoryDistributors: ColumnDef<AllUserProfileResponse>[] = [
     header: " Distributor name",
     cell: ({ row }) => (
       <div className="font-medium flex items-center space-x-2">
-        <div className="cursor-pointer">
+        <Link href={`/crm/${row.original.id}`}>
           <Edit2Icon className="" size={15} />
-        </div>
+        </Link>
+
         <p>{row.original?.full_name}</p>
       </div>
     ),
