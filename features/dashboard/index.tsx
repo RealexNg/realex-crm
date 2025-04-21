@@ -7,9 +7,10 @@ import CreateAccount from "./components/create-account";
 import { useGetAllUsers } from "./api-services/get-all-user-api";
 
 function Dashboard() {
-  const { data } = useGetAllUsers();
+  const { data, isLoading, isFetching } = useGetAllUsers();
   const datar = React.useMemo(() => data || [], [data]);
-  console.log(datar, "datar");
+  if (isLoading || isFetching)
+    return <div className="flex items-center w-full h-screen">Loading...</div>;
   return (
     <div className="w-full h-full flex items-center justify-center">
       <Tabs defaultValue="users" className="w-full">

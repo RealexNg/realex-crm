@@ -6,8 +6,8 @@ import { AllUserProfileResponse } from "@/entities/create-account";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 
-import { Edit2Icon } from "lucide-react";
-
+import { Edit2Icon, EyeIcon } from "lucide-react";
+import SendSMS from "./send-sms";
 export const allFactoryDistributors: ColumnDef<AllUserProfileResponse>[] = [
   {
     id: "full_name",
@@ -16,9 +16,11 @@ export const allFactoryDistributors: ColumnDef<AllUserProfileResponse>[] = [
     cell: ({ row }) => (
       <div className="font-medium flex items-center space-x-2">
         <Link href={`/crm/${row.original.id}`}>
-          <Edit2Icon className="" size={15} />
+          <Edit2Icon className="text-gray-500 hover:text-gray-700" size={15} />
         </Link>
-
+        <Link href={`/crm/distributor/${row.original.id}`}>
+          <EyeIcon className="text-gray-500 hover:text-gray-700" size={15} />
+        </Link>
         <p>{row.original?.full_name}</p>
       </div>
     ),
@@ -27,13 +29,13 @@ export const allFactoryDistributors: ColumnDef<AllUserProfileResponse>[] = [
     id: "advert",
     // accessorKey: "email",
     header: "Advert",
-    cell: () => (
+    cell: ({ row }) => (
       <div>
         <Link
           className={buttonVariants({ variant: "default", size: "sm" })}
-          href="/crm/add-advert"
+          href={`/crm/add-advert?uuid=${row.original.id}`}
         >
-          Add Advert
+          Order Product
         </Link>
       </div>
     ),
@@ -45,7 +47,7 @@ export const allFactoryDistributors: ColumnDef<AllUserProfileResponse>[] = [
     header: "Resend SMS",
     cell: ({ row }) => (
       <div className="flex items-center space-x-4">
-        <Button size={"sm"}>Resend SMS</Button>
+        <SendSMS userUuid={row.original.id} />
         <Button size={"sm"} variant={"outline"}>
           {row.original?.phone}
         </Button>
