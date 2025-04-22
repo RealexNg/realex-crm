@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useGetProducts } from "./api-services/products-api";
 import { useCartStore } from "./store/cart-store";
@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-function AdvertComponent() {
+function AdvertComponentContent() {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 0;
   const { data, isLoading } = useGetProducts(currentPage);
@@ -90,4 +90,10 @@ function AdvertComponent() {
   );
 }
 
-export default AdvertComponent;
+export default function AdvertComponent() {
+  return (
+    <Suspense fallback={null}>
+      <AdvertComponentContent />
+    </Suspense>
+  );
+}
