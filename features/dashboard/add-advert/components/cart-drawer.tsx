@@ -1,262 +1,284 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import { ShoppingCart } from "lucide-react";
-import { useCartStore } from "@/store/cart-store";
-import { CartItem } from "./cart-item";
+import { Input } from "@/components/ui/input";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Plus, Minus } from "lucide-react";
+import { useCartStore, CartItem } from "../store/cart-store";
+import { useState, Suspense } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { ErrorList } from "@/components/ui/error-list";
+import { request } from "@/utils/network";
 import { useSearchParams } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { request } from "@/utils/network";
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Suspense } from "react";
+import { toast } from "sonner";
 
 const shippingSchema = z.object({
   shipping_name: z.string().min(1, "Name is required"),
   shipping_country: z.string().min(1, "Country is required"),
   shipping_state: z.string().min(1, "State is required"),
-  shipping_lga: z.string().min(1, "LGA is required"),
   shipping_address: z.string().min(1, "Address is required"),
   shipping_phone: z.string().min(1, "Phone is required"),
+  shipping_lga: z.string().min(1, "LGA is required"),
   shipping_postal: z.string().min(1, "Postal code is required"),
 });
 
 type ShippingFormData = z.infer<typeof shippingSchema>;
 
-function CartDrawerContent() {
-  const { items, clearCart } = useCartStore();
+interface CartDrawerProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+function CartDrawerContent({ isOpen, onClose }: CartDrawerProps) {
+  const { items, removeItem, updateQuantity, clearCart } = useCartStore();
+  const [step, setStep] = useState<"cart" | "shipping">("cart");
   const searchParams = useSearchParams();
   const userUuid = searchParams.get("uuid");
-  const [isOpen, setIsOpen] = useState(false);
 
-  const form = useForm<ShippingFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ShippingFormData>({
     resolver: zodResolver(shippingSchema),
-    defaultValues: {
-      shipping_name: "",
-      shipping_country: "",
-      shipping_state: "",
-      shipping_lga: "",
-      shipping_address: "",
-      shipping_phone: "",
-      shipping_postal: "",
-    },
   });
 
-  const { mutate: createOrder, isLoading } = useMutation({
+  const createOrderMutation = useMutation({
     mutationFn: async (data: ShippingFormData) => {
-      if (!userUuid) throw new Error("User UUID is required");
+      if (!userUuid) {
+        throw new Error("User UUID not found in URL");
+      }
+
       return request({
         url: `orders/create/${userUuid}`,
         method: "POST",
         data: {
-          items: items.map((item) => ({
-            product_id: item.id,
+          products: items.map((item: CartItem) => ({
+            id: item.id,
             quantity: item.quantity,
           })),
-          ...data,
+          shipping_details: data,
         },
       });
     },
     onSuccess: () => {
+      toast.success("Order created successfully");
       clearCart();
-      setIsOpen(false);
-      form.reset();
+      setStep("cart");
+      onClose();
     },
   });
 
-  const onSubmit = (data: ShippingFormData) => {
-    createOrder(data);
+  const onSubmit = async (data: ShippingFormData) => {
+    try {
+      await createOrderMutation.mutateAsync(data);
+    } catch (error) {
+      console.error("Error creating order:", error);
+    }
   };
 
-  const total = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
   return (
-    <Drawer open={isOpen} onOpenChange={setIsOpen}>
-      <DrawerTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative">
-          <ShoppingCart className="h-5 w-5" />
-          {items.length > 0 && (
-            <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
-              {items.length}
-            </span>
-          )}
-        </Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <div className="mx-auto w-full max-w-sm">
-          <DrawerHeader>
-            <DrawerTitle>Your Cart</DrawerTitle>
-          </DrawerHeader>
-          <div className="p-4">
-            {items.length === 0 ? (
-              <p className="text-center text-muted-foreground">
-                Your cart is empty
-              </p>
-            ) : (
-              <div className="space-y-4">
-                {items.map((item) => (
-                  <CartItem key={item.id} item={item} />
-                ))}
-                <div className="border-t pt-4">
-                  <div className="flex justify-between font-medium">
-                    <span>Total</span>
-                    <span>₦{total.toLocaleString()}</span>
-                  </div>
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 z-40"
+            onClick={onClose}
+          />
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed right-0 top-0 h-full w-full md:w-1/3 bg-white z-50 shadow-lg"
+          >
+            <div className="p-4 h-full flex flex-col">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">
+                  {step === "cart" ? "Your Cart" : "Shipping Details"}
+                </h2>
+                <Button variant="ghost" size="icon" onClick={onClose}>
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+
+              {step === "cart" ? (
+                <div className="flex-1 overflow-y-auto">
+                  {items.length === 0 ? (
+                    <p className="text-center text-gray-500">
+                      Your cart is empty
+                    </p>
+                  ) : (
+                    <div className="space-y-4">
+                      {items.map((item: CartItem) => (
+                        <div
+                          key={item.id}
+                          className="flex items-center justify-between p-4 border rounded-lg"
+                        >
+                          <div>
+                            <h3 className="font-medium">{item.name}</h3>
+                            <p className="text-sm text-gray-500">
+                              ₦ {item.price.toFixed(2)}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              onClick={() =>
+                                updateQuantity(
+                                  item.id,
+                                  Math.max(0, item.quantity - 1)
+                                )
+                              }
+                            >
+                              <Minus className="h-4 w-4" />
+                            </Button>
+                            <Input
+                              type="number"
+                              value={item.quantity}
+                              onChange={(e) =>
+                                updateQuantity(
+                                  item.id,
+                                  Math.max(0, parseInt(e.target.value))
+                                )
+                              }
+                              className="w-16 text-center"
+                            />
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              onClick={() =>
+                                updateQuantity(item.id, item.quantity + 1)
+                              }
+                            >
+                              <Plus className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => removeItem(item.id)}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-4"
+              ) : (
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="flex-1 overflow-y-auto space-y-4"
+                >
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Full Name</label>
+                    <Input {...register("shipping_name")} />
+                    {errors.shipping_name?.message && (
+                      <ErrorList errors={[errors.shipping_name.message]} />
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Country</label>
+                    <Input {...register("shipping_country")} />
+                    {errors.shipping_country?.message && (
+                      <ErrorList errors={[errors.shipping_country.message]} />
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">State</label>
+                    <Input {...register("shipping_state")} />
+                    {errors.shipping_state?.message && (
+                      <ErrorList errors={[errors.shipping_state.message]} />
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Address</label>
+                    <Input {...register("shipping_address")} />
+                    {errors.shipping_address?.message && (
+                      <ErrorList errors={[errors.shipping_address.message]} />
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Phone</label>
+                    <Input {...register("shipping_phone")} />
+                    {errors.shipping_phone?.message && (
+                      <ErrorList errors={[errors.shipping_phone.message]} />
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">LGA</label>
+                    <Input {...register("shipping_lga")} />
+                    {errors.shipping_lga?.message && (
+                      <ErrorList errors={[errors.shipping_lga.message]} />
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Postal Code</label>
+                    <Input {...register("shipping_postal")} />
+                    {errors.shipping_postal?.message && (
+                      <ErrorList errors={[errors.shipping_postal.message]} />
+                    )}
+                  </div>
+                </form>
+              )}
+
+              <div className="mt-4 flex gap-2">
+                {step === "cart" ? (
+                  <Button
+                    className="flex-1"
+                    onClick={() => setStep("shipping")}
+                    disabled={items.length === 0}
                   >
-                    <FormField
-                      control={form.control}
-                      name="shipping_name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Full Name</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter your full name"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="shipping_country"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Country</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter your country"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="shipping_state"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>State</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Enter your state" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="shipping_lga"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>LGA</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Enter your LGA" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="shipping_address"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Address</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter your address"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="shipping_phone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Phone</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter your phone number"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="shipping_postal"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Postal Code</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter your postal code"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    Next
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => setStep("cart")}
+                    >
+                      Back
+                    </Button>
                     <Button
                       type="submit"
-                      className="w-full"
-                      disabled={isLoading}
+                      className="flex-1"
+                      onClick={handleSubmit(onSubmit)}
+                      disabled={createOrderMutation.isPending}
                     >
-                      {isLoading ? "Placing Order..." : "Place Order"}
+                      {createOrderMutation.isPending
+                        ? "Placing Order..."
+                        : "Place Order"}
                     </Button>
-                  </form>
-                </Form>
+                  </>
+                )}
               </div>
-            )}
-          </div>
-        </div>
-      </DrawerContent>
-    </Drawer>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 }
 
-export function CartDrawer() {
+export default function CartDrawer(props: CartDrawerProps) {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <CartDrawerContent />
+    <Suspense fallback={null}>
+      <CartDrawerContent {...props} />
     </Suspense>
   );
 }
