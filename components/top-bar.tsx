@@ -5,12 +5,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { storage } from "@/utils/storage";
-import { Logout, Notification, ShoppingCart } from "iconsax-react";
+
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { H5, Span } from "./ui/typography";
 import { useCartStore } from "@/features/dashboard/add-advert/store/cart-store";
 import CartDrawer from "@/features/dashboard/add-advert/components/cart-drawer";
+import { LogOut, ShoppingCart, Bell } from "lucide-react";
 
 function DashboardTopNav() {
   const router = useRouter();
@@ -35,14 +36,14 @@ function DashboardTopNav() {
             className="relative cursor-pointer"
             onClick={() => setIsCartOpen(true)}
           >
-            <ShoppingCart size={24} className="text-primary" variant="Bold" />
+            <ShoppingCart size={24} className="text-primary cursor-pointer" />
             {items.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                 {items.length}
               </span>
             )}
           </div>
-          <Notification size={24} className="text-primary" variant="Bold" />
+          <Bell size={24} className="text-primary cursor-pointer" />
 
           <Popover>
             <PopoverTrigger>
@@ -55,7 +56,7 @@ function DashboardTopNav() {
                 className="flex items-center justify-start gap-2 hover:bg-herobackground/10 cursor-pointer p-2 rounded-lg"
                 onClick={() => logout()}
               >
-                <Logout size={24} className="text-primary" />
+                <LogOut size={24} className="text-primary" />
                 <Span className="text-primary">Logout</Span>
               </div>
             </PopoverContent>
