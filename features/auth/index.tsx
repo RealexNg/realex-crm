@@ -53,6 +53,9 @@ function LoginPageComponent() {
         storage.sessionStorage.set("__session", response.token);
         storage.cookieStorage.set("__session", response.token);
         Cookie.set("__session", response?.token);
+        toast.success("Login successful", {
+          duration: 5000,
+        });
         router.push("/crm");
       }
     } catch (error: unknown) {
