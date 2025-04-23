@@ -29,7 +29,7 @@ function EditUserAccount({ id }: { id: string }) {
     register,
     handleSubmit,
     setValue,
-    // reset,
+
     formState: { errors },
   } = useForm<UserProfile>({
     resolver: zodResolver(userProfileSchema),
@@ -40,7 +40,6 @@ function EditUserAccount({ id }: { id: string }) {
       sms_phone: data?.sms_phone,
       email: data?.email,
       region: data?.region,
-      // address: data?.address,
 
       id_document: data?.id_document,
       profile_picture: data?.profile_picture,
