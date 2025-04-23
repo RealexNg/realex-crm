@@ -15,7 +15,11 @@ import {
 } from "../api-services/create-user-api";
 import { toast } from "sonner";
 
-function CreateAccount() {
+function CreateAccount({
+  setTab,
+}: {
+  setTab: (tab: "users" | "create-user") => void;
+}) {
   const { mutateAsync, isPending } = useCreateUserAccount();
   const queryClient = useQueryClient();
 
@@ -42,6 +46,7 @@ function CreateAccount() {
         if (response.id) {
           reset();
           toast.success("Account created successfully");
+          setTab("users");
           queryClient.invalidateQueries({
             queryKey: ["GET_SINGLE_STORE_PRODUCTS"],
           });
