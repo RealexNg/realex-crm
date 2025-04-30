@@ -10,7 +10,7 @@ export const userProfileSchema = z.object({
   region: z.string().optional(),
   address: z.string().optional(),
   category: z.string().optional(),
-  id_document: z.string().url().optional(),
+  id_document: z.string().optional(),
   profile_picture: z.union([z.instanceof(File), z.string().url()]).optional(),
 });
 

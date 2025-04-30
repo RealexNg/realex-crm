@@ -176,7 +176,7 @@ function EditUserAccount({ id }: { id: string }) {
               )}
             </div>
             <div className="space-y-1">
-              <Label>National Id *</Label>
+              <Label>National Id Number *</Label>
               <Input type="text" {...register("id_document")} />
               {errors?.id_document && (
                 <ErrorList errors={[errors?.id_document?.message || ""]} />
